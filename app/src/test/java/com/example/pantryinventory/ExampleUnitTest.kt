@@ -1,4 +1,4 @@
-package com.example.pantryinventor
+package com.example.pantryinventory
 
 import org.junit.Test
 
