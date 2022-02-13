@@ -6,13 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:measureWithLargestChild="true"
+        android:stretchColumns="*"
+        android:columnCount = "4">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="#F5F5DC">
+
+            <ImageButton
+                android:id="@+id/addItem"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_column="3"
+                android:src="@drawable/plus"
+                android:backgroundTint="#F5F5DC"
+                android:scaleType="fitCenter"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_column="0"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="milk"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_column="1"
+                android:gravity="center_vertical|right"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:text="2"
+                android:textColor="@color/black"/>
+            <ImageButton
+                android:id="@+id/increaseItem"
+                android:backgroundTint="@color/white"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_column="2"
+                android:scaleType="fitCenter"
+                android:src="@drawable/plus"/>
+            <ImageButton
+                android:id="@+id/decreaseItem"
+                android:backgroundTint="@color/white"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_column="3"
+                android:scaleType="fitCenter"
+                android:src="@drawable/minus"/>
+
+        </TableRow>
+
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
