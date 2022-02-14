@@ -17,21 +17,6 @@
         android:stretchColumns="*"
         android:columnCount = "4">
 
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:background="#F5F5DC">
-
-            <ImageButton
-                android:id="@+id/addItem"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_column="3"
-                android:src="@drawable/plus"
-                android:backgroundTint="#F5F5DC"
-                android:scaleType="fitCenter"/>
-        </TableRow>
-
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
