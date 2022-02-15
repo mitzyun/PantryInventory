@@ -14,6 +14,8 @@
         android:background="#8ccf9d"
         android:ems="10"
         android:hint="Enter Item Name"
+        android:inputType="text"
+        android:singleLine="true"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,6 +31,8 @@
         android:background="#8ccf9d"
         android:ems="10"
         android:hint="Enter Item Quantity"
+        android:inputType="number"
+        android:singleLine="true"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,12 +41,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/confirmButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="42dp"
         android:backgroundTint="#b3cfe6"
         android:text="Confirm"
+        android:onClick="addItem"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
