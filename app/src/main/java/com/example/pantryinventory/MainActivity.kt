@@ -1,20 +1,17 @@
 package com.example.pantryinventory
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.TextView
+import android.view.*
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
-
-lateinit var arrayAdapter: ArrayAdapter<*>
+var testAdapter: CustomAdapter? = null
 var itemNames = ArrayList<String>()
 var itemQuantities = ArrayList<String>()
-var combinedList = ArrayList<String>()
+var testList = ArrayList<PantryItem>()
 lateinit var sharedPreferences: SharedPreferences
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         listView = findViewById(R.id.pantryList)
-
         getData()
         updateList()
     } //onCreate
@@ -42,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         if (item.itemId == R.id.addItem) {
             val intent = Intent(applicationContext, AddActivity::class.java)
             startActivity(intent)
+            intent.putExtra("itemNames", itemNames)
+            intent.putExtra("itemQuantities", itemQuantities)
             return true
         }
         return false
@@ -75,12 +73,49 @@ class MainActivity : AppCompatActivity() {
 
     }//getData
 
-    fun updateList(){
-        for(i in 0 until itemNames.count()){
-            combinedList.add(itemNames[i] + " - " + itemQuantities[i])
+    fun updateList() {
+        for (i in 0 until itemNames.count()) {
+            testList.add(PantryItem(itemNames[i], itemQuantities[i]))
         }
-        arrayAdapter = ArrayAdapter(this, R.layout.pantry_item, R.id.name, combinedList)
-        listView.adapter = arrayAdapter
-    }//updateList
+        testAdapter = CustomAdapter(this, testList)
+        listView.adapter = testAdapter
+    } // updateList
 
 } // MainActivity
+
+class PantryItem (name:String, quantity:String) {
+    var itemName = name
+    var itemQuantity = quantity.toInt()
+    lateinit var buttonIncrease : ImageButton
+    lateinit var buttonDecrease : ImageButton
+
+} // PantryItem
+
+class CustomAdapter(private val context: Context, private val arrayList: java.util.ArrayList<PantryItem>) : BaseAdapter() {
+    private lateinit var itemName: TextView
+    private lateinit var itemQuantity: TextView
+    private lateinit var increaseButton: ImageButton
+    private lateinit var decreaseButton: ImageButton
+
+    override fun getCount(): Int {
+        return arrayList.size
+    } // getCount
+    override fun getItem(position: Int): Any {
+        return position
+    } // getItem
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    } // getItemId
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+        var convertView = convertView
+        convertView = LayoutInflater.from(context).inflate(R.layout.pantry_item, parent, false)
+        itemName = convertView.findViewById(R.id.name)
+        itemQuantity = convertView.findViewById(R.id.quantity)
+        increaseButton = convertView.findViewById(R.id.increaseItem)
+        decreaseButton = convertView.findViewById(R.id.decreaseItem)
+        itemName.text = " " + arrayList[position].itemName
+        itemQuantity.text = arrayList[position].itemQuantity.toString()
+        //increaseButton.text = arrayList[position].mobileNumber
+        return convertView
+    } // getView
+} // CustomAdapter

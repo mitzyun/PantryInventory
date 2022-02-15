@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 class AddActivity: AppCompatActivity()  {
     lateinit var name : EditText
     lateinit var quantity : EditText
+    var itemNames = ArrayList<String>()
+    var itemQuantities = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +23,6 @@ class AddActivity: AppCompatActivity()  {
     fun addItem(view : View){
         itemNames.add(name.text.toString())
         itemQuantities.add(quantity.text.toString())
-
         sharedPreferences = applicationContext.getSharedPreferences(
             "com.example.pantryinventory", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString(
