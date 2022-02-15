@@ -2,18 +2,19 @@ package com.example.pantryinventory
 
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.Toast
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
 
 lateinit var arrayAdapter: ArrayAdapter<*>
 var itemNames = ArrayList<String>()
 var itemQuantities = ArrayList<String>()
+var combinedList = ArrayList<String>()
 lateinit var sharedPreferences: SharedPreferences
 
 class MainActivity : AppCompatActivity() {
@@ -75,9 +76,11 @@ class MainActivity : AppCompatActivity() {
     }//getData
 
     fun updateList(){
-        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, itemNames)
+        for(i in 0 until itemNames.count()){
+            combinedList.add(itemNames[i] + " - " + itemQuantities[i])
+        }
+        arrayAdapter = ArrayAdapter(this, R.layout.pantry_item, R.id.name, combinedList)
         listView.adapter = arrayAdapter
-
     }//updateList
 
 } // MainActivity

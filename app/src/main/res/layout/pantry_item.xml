@@ -1,45 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:measureWithLargestChild="true"
-    android:stretchColumns="*"
-    android:columnCount = "4">
-    <TableRow>
+    android:weightSum="4">
+
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/name"
+            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_column="0"
+            android:layout_weight="2"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:text="milk"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_column="1"
-            android:gravity="center_vertical|right"
-            android:paddingRight="15dp"
-            android:paddingLeft="15dp"
-            android:text="2"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
         <ImageButton
             android:id="@+id/increaseItem"
-            android:backgroundTint="@color/white"
-            android:layout_width="40dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
             android:scaleType="fitCenter"
-            android:layout_column="2"
-            android:src="@drawable/plus"/>
+            android:src="@drawable/plus" />
+
         <ImageButton
             android:id="@+id/decreaseItem"
-            android:backgroundTint="@color/white"
-            android:layout_width="40dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_column="3"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
             android:scaleType="fitCenter"
-            android:src="@drawable/minus"/>
-    </TableRow>
-</TableLayout>
+            android:src="@drawable/minus" />
+</LinearLayout>
