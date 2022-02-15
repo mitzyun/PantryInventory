@@ -6,54 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <ListView
+        android:id="@+id/pantryList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:measureWithLargestChild="true"
-        android:stretchColumns="*"
-        android:columnCount = "4">
-
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_column="0"
-                android:gravity="center_vertical"
-                android:paddingLeft="15dp"
-                android:text="milk"
-                android:textColor="@color/black"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_column="1"
-                android:gravity="center_vertical|right"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:text="2"
-                android:textColor="@color/black"/>
-            <ImageButton
-                android:id="@+id/increaseItem"
-                android:backgroundTint="@color/white"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_column="2"
-                android:scaleType="fitCenter"
-                android:src="@drawable/plus"/>
-            <ImageButton
-                android:id="@+id/decreaseItem"
-                android:backgroundTint="@color/white"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_column="3"
-                android:scaleType="fitCenter"
-                android:src="@drawable/minus"/>
-
-        </TableRow>
-
-    </TableLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
