@@ -1,6 +1,8 @@
 package com.example.pantryinventory
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,6 +10,8 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Calendar.getInstance
+
+//Michelle Yun and Victoria Lei
 
 var customAdapter: CustomAdapter? = null
 var itemNames = ArrayList<String>()
@@ -146,8 +150,16 @@ class CustomAdapter(private val context: Context, private val arrayList: java.ut
     } // getView
 
     fun removeView(i : Int) {
-        arrayList.removeAt(i)
-        this.notifyDataSetChanged()
+        AlertDialog.Builder(context)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle("Confirm")
+            .setMessage("Do you want to delete this item?")
+            .setPositiveButton("Yes") { dialogInterface: DialogInterface, x: Int ->
+                arrayList.removeAt(i)
+                this.notifyDataSetChanged()
+            }
+            .setNegativeButton("No", null)
+            .show()
     } // removeView
 
 } // CustomAdapter
