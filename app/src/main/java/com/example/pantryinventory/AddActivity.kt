@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 class AddActivity: AppCompatActivity()  {
     lateinit var name : EditText
     lateinit var quantity : EditText
-    var localItem = ArrayList<String>()
-    var localQuantity = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,24 +22,24 @@ class AddActivity: AppCompatActivity()  {
 
     fun addItem(view : View){
         if (name.text.isNotEmpty() || name.text.isNotBlank()) {
-            localItem.add(name.text.toString())
+            itemNames.add(name.text.toString())
         }
         else {
-            localItem.add("item")
+            itemNames.add("item")
         }
         if (quantity.text.isNotEmpty() || quantity.text.isNotBlank()) {
-            localQuantity.add(quantity.text.toString())
+            itemQuantities.add(quantity.text.toString())
         }
         else {
-            localQuantity.add("0")
+            itemQuantities.add("0")
         }
         sharedPreferences = applicationContext.getSharedPreferences(
             "com.example.pantryinventory", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString(
-            "itemNames", ObjectSerializer.serialize(localItem))
+            "itemNames", ObjectSerializer.serialize(itemNames))
             .apply()
         sharedPreferences.edit().putString(
-            "itemQuantities", ObjectSerializer.serialize(localQuantity))
+            "itemQuantities", ObjectSerializer.serialize(itemQuantities))
             .apply()
 
         val intent = Intent(this, MainActivity::class.java)

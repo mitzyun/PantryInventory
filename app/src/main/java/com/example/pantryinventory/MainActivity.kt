@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //sharedPreferences.edit().clear().commit()
-
         listView = findViewById(R.id.pantryList)
         getData()
         updateList()
@@ -79,6 +77,7 @@ class MainActivity : AppCompatActivity() {
     }//getData
 
     fun updateList() {
+        pantryItemList.clear()
         for (i in 0 until itemNames.count()) {
             pantryItemList.add(PantryItem(itemNames[i], itemQuantities[i]))
         }
@@ -155,7 +154,15 @@ class CustomAdapter(private val context: Context, private val arrayList: java.ut
             .setTitle("Confirm")
             .setMessage("Do you want to delete this item?")
             .setPositiveButton("Yes") { dialogInterface: DialogInterface, x: Int ->
+                itemNames.removeAt(i)
+                itemQuantities.removeAt(i)
                 arrayList.removeAt(i)
+                sharedPreferences.edit()
+                    .putString("iteNames", ObjectSerializer.serialize(itemNames))
+                    .apply()
+                sharedPreferences.edit()
+                    .putString("itemQuantities", ObjectSerializer.serialize(itemQuantities))
+                    .apply()
                 this.notifyDataSetChanged()
             }
             .setNegativeButton("No", null)
