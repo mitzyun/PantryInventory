@@ -158,7 +158,7 @@ class CustomAdapter(private val context: Context, private val arrayList: java.ut
                 itemQuantities.removeAt(i)
                 arrayList.removeAt(i)
                 sharedPreferences.edit()
-                    .putString("iteNames", ObjectSerializer.serialize(itemNames))
+                    .putString("itemNames", ObjectSerializer.serialize(itemNames))
                     .apply()
                 sharedPreferences.edit()
                     .putString("itemQuantities", ObjectSerializer.serialize(itemQuantities))
