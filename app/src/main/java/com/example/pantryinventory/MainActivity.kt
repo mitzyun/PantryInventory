@@ -122,6 +122,10 @@ class CustomAdapter(private val context: Context, private val arrayList: java.ut
             var quantity = arrayList[position].itemQuantity.toInt()
             quantity++
             arrayList[position].itemQuantity = quantity.toString()
+            itemQuantities[position] = quantity.toString()
+            sharedPreferences.edit()
+                .putString("itemQuantities", ObjectSerializer.serialize(itemQuantities))
+                .apply()
             this.notifyDataSetChanged()
         } // increaseButton listener
         decreaseButton.setOnClickListener {
@@ -139,6 +143,10 @@ class CustomAdapter(private val context: Context, private val arrayList: java.ut
             } else {
                 quantity--
                 arrayList[position].itemQuantity = quantity.toString()
+                itemQuantities[position] = quantity.toString()
+                sharedPreferences.edit()
+                    .putString("itemQuantities", ObjectSerializer.serialize(itemQuantities))
+                    .apply()
             }
             this.notifyDataSetChanged()
         } // decreaseButton listener
