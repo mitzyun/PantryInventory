@@ -8,10 +8,10 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
-var testAdapter: CustomAdapter? = null
+var customAdapter: CustomAdapter? = null
 var itemNames = ArrayList<String>()
 var itemQuantities = ArrayList<String>()
-var testList = ArrayList<PantryItem>()
+var pantryItemList = ArrayList<PantryItem>()
 lateinit var sharedPreferences: SharedPreferences
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        sharedPreferences = getSharedPreferences(
+            "com.example.pantryinventory", MODE_PRIVATE)
+        //sharedPreferences.edit().clear().commit()
 
         listView = findViewById(R.id.pantryList)
         getData()
@@ -46,9 +49,6 @@ class MainActivity : AppCompatActivity() {
     }// onOptionsItemSelected
 
     fun getData(){
-        sharedPreferences = getSharedPreferences(
-            "com.example.pantryinventory", MODE_PRIVATE)
-
         var pantryList : ArrayList<String>
         pantryList = ObjectSerializer
             .deserialize(
@@ -75,22 +75,24 @@ class MainActivity : AppCompatActivity() {
 
     fun updateList() {
         for (i in 0 until itemNames.count()) {
-            testList.add(PantryItem(itemNames[i], itemQuantities[i]))
+            pantryItemList.add(PantryItem(itemNames[i], itemQuantities[i]))
         }
-        testAdapter = CustomAdapter(this, testList)
-        listView.adapter = testAdapter
+        customAdapter = CustomAdapter(this, pantryItemList)
+        listView.adapter = customAdapter
     } // updateList
 
 } // MainActivity
 
 class PantryItem (name:String, quantity:String) {
     var itemName = name
-    var itemQuantity = quantity.toInt()
-    lateinit var buttonIncrease : ImageButton
-    lateinit var buttonDecrease : ImageButton
+    var itemQuantity = quantity
+    lateinit var increaseButton : ImageButton
+    lateinit var decreaseButton : ImageButton
+    var initialize : Boolean = false
 
 } // PantryItem
 
+// source: https://www.tutorialspoint.com/how-to-write-a-custom-adapter-for-my-list-view-on-android-using-kotlin
 class CustomAdapter(private val context: Context, private val arrayList: java.util.ArrayList<PantryItem>) : BaseAdapter() {
     private lateinit var itemName: TextView
     private lateinit var itemQuantity: TextView
@@ -109,13 +111,50 @@ class CustomAdapter(private val context: Context, private val arrayList: java.ut
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         var convertView = convertView
         convertView = LayoutInflater.from(context).inflate(R.layout.pantry_item, parent, false)
+
         itemName = convertView.findViewById(R.id.name)
         itemQuantity = convertView.findViewById(R.id.quantity)
         increaseButton = convertView.findViewById(R.id.increaseItem)
         decreaseButton = convertView.findViewById(R.id.decreaseItem)
-        itemName.text = " " + arrayList[position].itemName
-        itemQuantity.text = arrayList[position].itemQuantity.toString()
-        //increaseButton.text = arrayList[position].mobileNumber
+
+        increaseButton.setOnClickListener {
+            var quantity = arrayList[position].itemQuantity.toInt()
+            quantity++
+            arrayList[position].itemQuantity = quantity.toString()
+            this.notifyDataSetChanged()
+        } // increaseButton listener
+        decreaseButton.setOnClickListener {
+            var quantity = arrayList[position].itemQuantity.toInt()
+
+            // check if item should be deleted
+            if (quantity == 0) {
+                val name = arrayList[position].itemName
+                for (i in 0 until arrayList.count()) {
+                    if (arrayList.get(i).itemName == name) {
+                        removeView(i)
+                        break
+                    }
+                }
+            } else {
+                quantity--
+                arrayList[position].itemQuantity = quantity.toString()
+            }
+            this.notifyDataSetChanged()
+        } // decreaseButton listener
+
+        itemName.text = arrayList[position].itemName
+        itemQuantity.text = arrayList[position].itemQuantity
         return convertView
     } // getView
+
+    fun removeView(i: Int) {
+        sharedPreferences.edit().remove(itemNames.get(i).toString())
+        itemNames.removeAt(i)
+        sharedPreferences.edit().remove(itemQuantities.get(i).toString())
+        itemQuantities.removeAt(i)
+        arrayList.removeAt(i)
+        this.notifyDataSetChanged()
+        
+    }
+
 } // CustomAdapter

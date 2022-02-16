@@ -18,11 +18,23 @@ class AddActivity: AppCompatActivity()  {
         setContentView(R.layout.activity_additem)
         name = findViewById(R.id.itemName)
         quantity = findViewById(R.id.itemQuantity)
+
     }//onCreate
 
     fun addItem(view : View){
-        itemNames.add(name.text.toString())
-        itemQuantities.add(quantity.text.toString())
+        if (name.text.isNotEmpty() || name.text.isNotBlank()) {
+            itemNames.add(name.text.toString())
+        }
+        else {
+            itemNames.add("item")
+        }
+        if (quantity.text.isNotEmpty() || quantity.text.isNotBlank()) {
+            itemQuantities.add(quantity.text.toString())
+        }
+        else {
+            itemQuantities.add("0")
+        }
+
         sharedPreferences = applicationContext.getSharedPreferences(
             "com.example.pantryinventory", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString(
