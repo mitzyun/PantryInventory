@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import java.util.Calendar.getInstance
 
 var customAdapter: CustomAdapter? = null
 var itemNames = ArrayList<String>()
@@ -20,8 +21,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        sharedPreferences = getSharedPreferences(
-            "com.example.pantryinventory", MODE_PRIVATE)
         //sharedPreferences.edit().clear().commit()
 
         listView = findViewById(R.id.pantryList)
@@ -49,6 +48,8 @@ class MainActivity : AppCompatActivity() {
     }// onOptionsItemSelected
 
     fun getData(){
+        sharedPreferences = getSharedPreferences(
+            "com.example.pantryinventory", MODE_PRIVATE)
         var pantryList : ArrayList<String>
         pantryList = ObjectSerializer
             .deserialize(
@@ -86,9 +87,6 @@ class MainActivity : AppCompatActivity() {
 class PantryItem (name:String, quantity:String) {
     var itemName = name
     var itemQuantity = quantity
-    lateinit var increaseButton : ImageButton
-    lateinit var decreaseButton : ImageButton
-    var initialize : Boolean = false
 
 } // PantryItem
 
@@ -147,14 +145,9 @@ class CustomAdapter(private val context: Context, private val arrayList: java.ut
         return convertView
     } // getView
 
-    fun removeView(i: Int) {
-        sharedPreferences.edit().remove(itemNames.get(i).toString())
-        itemNames.removeAt(i)
-        sharedPreferences.edit().remove(itemQuantities.get(i).toString())
-        itemQuantities.removeAt(i)
+    fun removeView(i : Int) {
         arrayList.removeAt(i)
         this.notifyDataSetChanged()
-        
-    }
+    } // removeView
 
 } // CustomAdapter
